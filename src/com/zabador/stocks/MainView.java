@@ -59,10 +59,15 @@ public class MainView implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit) {
+            String searchTerms = "";
             for(JCheckBox cb : checkboxes) {
-                if(cb.isSelected())
-                    System.out.println(cb.getText());
+                if(cb.isSelected()) {
+                    String key = cb.getText();
+                    searchTerms += map.get(key);
+                }
             }
+            DownloadCSV download = new DownloadCSV(searchTerms);
+            download.download();
         }
     }
 }
