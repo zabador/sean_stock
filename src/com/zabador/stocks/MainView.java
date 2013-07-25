@@ -7,7 +7,9 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +22,7 @@ public class MainView implements ActionListener {
     private ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
     private JButton submit;
     private JFrame frame;
+    private JTextField symbol;
 
     public MainView() {
         fillMap();
@@ -44,6 +47,12 @@ public class MainView implements ActionListener {
             frame.getContentPane().add(cb);
         }
 
+        JLabel askForInput = new JLabel("Enter a stock symbol");
+        frame.getContentPane().add(askForInput);
+
+        symbol = new JTextField();
+        frame.getContentPane().add(symbol);
+
         submit = new JButton("Submit");
         submit.addActionListener(this);
         frame.getContentPane().add(submit);
@@ -66,7 +75,8 @@ public class MainView implements ActionListener {
             }
 
             header = header.replaceAll(",$","\n");
-            DownloadCSV download = new DownloadCSV(header, searchTerms);
+            String searchSymbol = symbol.getText();
+            DownloadCSV download = new DownloadCSV(header, searchSymbol, searchTerms);
             download.download();
             JOptionPane.showMessageDialog(frame, "File finished downloading");
         }

@@ -11,16 +11,18 @@ public class DownloadCSV {
 
     private String searchTerms;
     private String header;
+    private String searchSymbol;
 
-    public DownloadCSV(String header, String searchTerms) {
+    public DownloadCSV(String header, String searchSymbol, String searchTerms) {
 
         this.searchTerms = searchTerms;
         this.header = header;
+        this.searchSymbol = searchSymbol;
     }
 
     public void download() {
         try {
-            URL website = new URL("http://download.finance.yahoo.com/d/quotes.csv?s=GOOG+AAPL&f="+ searchTerms +"&e=.csv");
+            URL website = new URL("http://download.finance.yahoo.com/d/quotes.csv?s="+ searchSymbol +"&f="+ searchTerms +"&e=.csv");
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());
             FileOutputStream fos = new FileOutputStream("stockInfo.csv");
             fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
