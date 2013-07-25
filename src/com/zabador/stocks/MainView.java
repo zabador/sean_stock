@@ -38,7 +38,7 @@ public class MainView implements ActionListener {
         frame = new JFrame("Stock Info Selector");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,200);
-        frame.setLayout(new GridLayout(0,10));
+        frame.setLayout(new GridLayout(0,5));
 
         for(JCheckBox cb : checkboxes) {
             frame.getContentPane().add(cb);
@@ -65,8 +65,7 @@ public class MainView implements ActionListener {
                 }
             }
 
-            header = header.replaceAll(",$","");
-            header += "\n";
+            header = header.replaceAll(",$","\n");
             DownloadCSV download = new DownloadCSV(header, searchTerms);
             download.download();
             JOptionPane.showMessageDialog(frame, "File finished downloading");
