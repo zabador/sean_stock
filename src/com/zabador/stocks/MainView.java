@@ -1,7 +1,10 @@
 package com.zabador.stocks;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 
@@ -9,10 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainView {
+public class MainView implements ActionListener {
 
     private Map<String, String> map;
     private ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
+    private JButton submit;
 
     public MainView() {
         fillMap();
@@ -44,8 +48,21 @@ public class MainView {
         for(JCheckBox cb : checkboxes) {
             frame.getContentPane().add(cb);
         }
+
+        submit = new JButton("Submit");
+        submit.addActionListener(this);
+        frame.getContentPane().add(submit);
         
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == submit) {
+            for(JCheckBox cb : checkboxes) {
+                if(cb.isSelected())
+                    System.out.println(cb.getText());
+            }
+        }
     }
 }
