@@ -15,9 +15,9 @@ public class DownloadCSV {
 
     public DownloadCSV(String header, String searchSymbol, String searchTerms) {
 
-        this.searchTerms = searchTerms;
-        this.header = header;
-        this.searchSymbol = searchSymbol;
+        this.searchTerms = searchTerms; // options that the user selected to be downloaded
+        this.header = header; // column names
+        this.searchSymbol = searchSymbol; // company stock symbol
     }
 
     public void download() {
@@ -32,6 +32,10 @@ public class DownloadCSV {
         }
     }
 
+    /**
+     * Prepend the header to the CSV file so user knows what the columns are
+     *
+     */
     public void prepend() {
         try {
             RandomAccessFile file = new RandomAccessFile("stockInfo.csv","rws");

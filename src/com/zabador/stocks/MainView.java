@@ -70,18 +70,20 @@ public class MainView implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == submit) {
+            //this will be passed to the DowloadCSV and be put in the url to download what the user selected
             String searchTerms = "";
+            //header for top row of so user knows what the columns are
             String header = "";
 
             for(JCheckBox cb : checkboxes) {
                 if(cb.isSelected()) {
                     String key = cb.getText();
-                    header += key+",";
+                    header += key+","; // add comma for csv 
                     searchTerms += map.get(key);
                 }
             }
 
-            header = header.replaceAll(",$","\n");
+            header = header.replaceAll(",$","\n");// remove last comma from header
             String searchSymbol = symbol.getText();
             DownloadCSV download = new DownloadCSV(header, searchSymbol, searchTerms);
             download.download();
