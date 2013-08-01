@@ -173,7 +173,7 @@ public class MainView implements ActionListener {
 
         else if(e.getSource() == searchBtn) {
 
-            SearchSymbol company = new SearchSymbol(searchField.getText());
+            SearchSymbol company = new SearchSymbol(searchField.getText().replaceAll(" ","+"));
             searchResult.setText(company.getSymbol());
         }
     }

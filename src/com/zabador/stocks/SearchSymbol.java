@@ -30,8 +30,13 @@ public class SearchSymbol {
         jsonFeed = readJsonFromUrl("http://d.yimg.com/autoc.finance.yahoo.com/autoc?query="+ query +"&callback=YAHOO.Finance.SymbolSuggest.ssCallback");
         JSONObject resultSet = jsonFeed.getJSONObject("ResultSet");
         JSONArray result = resultSet.getJSONArray("Result");
-        JSONObject company = result.getJSONObject(0);
-        return company.getString("symbol")+"  -   "+company.getString("name");
+        try{
+            JSONObject company = result.getJSONObject(0);
+            return company.getString("symbol")+"  -   "+company.getString("name");
+        }catch(Exception e){
+            return "No results found";
+        }
+
     }
 
     private String readAll(Reader rd) {
