@@ -29,6 +29,7 @@ public class MainView implements ActionListener {
     private ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
     private JButton submit;
     private JButton add;
+    private JButton remove;
     private JFrame frame;
     private JTextField symbol;
     private JList symbols;
@@ -75,14 +76,21 @@ public class MainView implements ActionListener {
 
         symbolPane = new JScrollPane(symbols);
 
+        submit = new JButton("Submit");
+        submit.addActionListener(this);
 
         add = new JButton("Add -->");
         add.addActionListener(this);
 
+        remove = new JButton("<-- Remove");
+        remove.addActionListener(this);
+
         inputPanel.add(askForInput);
         inputPanel.add(symbol);
         inputPanel.add(add);
+        inputPanel.add(remove);
         inputPanel.add(symbolPane);
+        inputPanel.add(submit);
 
         frame.getContentPane().add(checkboxPanel,BorderLayout.NORTH);
         frame.getContentPane().add(inputPanel,BorderLayout.SOUTH);
@@ -107,19 +115,30 @@ public class MainView implements ActionListener {
             }
 
             header = header.replaceAll(",$","\n");// remove last comma from header
-            String searchSymbol = symbol.getText();
+            String searchSymbol = symbols.getModel().toString().replace("[", "").replace("]","").replaceAll(",","+").replaceAll(" ","");
+            System.out.println(searchSymbol);
             DownloadCSV download = new DownloadCSV(header, searchSymbol, searchTerms);
             download.download();
-            SearchSymbol company = new SearchSymbol(symbol.getText());
-            company.getSymbol();
+            //SearchSymbol company = new SearchSymbol(symbol.getText());
+            //company.getSymbol();
             JOptionPane.showMessageDialog(frame, "File finished downloading");
         }
+        // add symbol to the List
         else if(e.getSource() == add) {
 
             if(!symbol.getText().isEmpty()) {
                 listModel.addElement(symbol.getText());
                 symbols.setModel(listModel);
                 symbol.setText("");
+            }
+        }
+
+        // remove item from the list
+        else if(e.getSource() == remove) {
+
+            if(!symbols.isSelectionEmpty()) {
+                listModel.remove(symbols.getSelectedIndex());
+                symbols.setModel(listModel);
             }
         }
     }
