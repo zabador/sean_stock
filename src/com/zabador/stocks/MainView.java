@@ -6,13 +6,17 @@ import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,8 +28,12 @@ public class MainView implements ActionListener {
     private Map<String, String> map;
     private ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
     private JButton submit;
+    private JButton add;
     private JFrame frame;
     private JTextField symbol;
+    private JList symbols;
+    private DefaultListModel listModel;
+    private JScrollPane symbolPane;
 
     public MainView() {
         fillMap();
@@ -57,12 +65,24 @@ public class MainView implements ActionListener {
 
         symbol = new JTextField(20);
 
-        submit = new JButton("Submit");
-        submit.addActionListener(this);
+        listModel = new DefaultListModel();
+
+        symbols = new JList(listModel);
+        symbols.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        symbols.setLayoutOrientation(JList.VERTICAL);
+        symbols.setVisibleRowCount(20);
+        symbols.setFixedCellWidth(150);
+
+        symbolPane = new JScrollPane(symbols);
+
+
+        add = new JButton("Add -->");
+        add.addActionListener(this);
 
         inputPanel.add(askForInput);
         inputPanel.add(symbol);
-        inputPanel.add(submit);
+        inputPanel.add(add);
+        inputPanel.add(symbolPane);
 
         frame.getContentPane().add(checkboxPanel,BorderLayout.NORTH);
         frame.getContentPane().add(inputPanel,BorderLayout.SOUTH);
@@ -93,6 +113,14 @@ public class MainView implements ActionListener {
             SearchSymbol company = new SearchSymbol(symbol.getText());
             company.getSymbol();
             JOptionPane.showMessageDialog(frame, "File finished downloading");
+        }
+        else if(e.getSource() == add) {
+
+            if(!symbol.getText().isEmpty()) {
+                listModel.addElement(symbol.getText());
+                symbols.setModel(listModel);
+                symbol.setText("");
+            }
         }
     }
 
