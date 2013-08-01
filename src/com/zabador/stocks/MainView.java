@@ -29,13 +29,14 @@ public class MainView implements ActionListener {
     private ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
     private JButton submit;
     private JButton add;
-    private JButton remove;
+    private JButton remove, searchBtn;
     private JFrame frame;
-    private JTextField symbol;
+    private JTextField symbol, searchField;
     private JList symbols;
     private DefaultListModel listModel;
     private JScrollPane symbolPane;
-    private JPanel buttonPanel;
+    private JPanel buttonPanel, symbolPanel, searchPanel, search_symbolPanel;
+    private JLabel searchLabel;
 
     public MainView() {
         fillMap();
@@ -58,15 +59,32 @@ public class MainView implements ActionListener {
         JPanel checkboxPanel = new JPanel(new GridLayout(0,4));
         JPanel inputPanel = new JPanel();
         buttonPanel = new JPanel(new GridLayout(2,1));
+        symbolPanel = new JPanel(new GridLayout(1,2));
+        searchPanel = new JPanel(new GridLayout(1,3));
+        search_symbolPanel = new JPanel(new GridLayout(2,1));
+        
 
         for(JCheckBox cb : checkboxes) {
             checkboxPanel.add(cb);
         }
 
         JLabel askForInput = new JLabel("Enter a stock symbol:   ");
-        inputPanel.add(askForInput);
+        symbolPanel.add(askForInput);
 
         symbol = new JTextField(20);
+        symbolPanel.add(symbol);
+
+        searchLabel = new JLabel("Or.... Search for a company's symbol");
+        searchPanel.add(searchLabel);
+
+        searchField = new JTextField(20);
+        searchPanel.add(searchField);
+
+        searchBtn = new JButton("Search");
+        searchPanel.add(searchBtn);
+
+        search_symbolPanel.add(symbolPanel);
+        search_symbolPanel.add(searchPanel);
 
         listModel = new DefaultListModel();
 
@@ -90,8 +108,7 @@ public class MainView implements ActionListener {
         buttonPanel.add(add);
         buttonPanel.add(remove);
 
-        inputPanel.add(askForInput);
-        inputPanel.add(symbol);
+        inputPanel.add(search_symbolPanel);
         inputPanel.add(buttonPanel);
         inputPanel.add(symbolPane);
         inputPanel.add(submit);
@@ -118,7 +135,7 @@ public class MainView implements ActionListener {
                 }
             }
 
-            // if user does not select any options pass in name and symbol as default
+            // if user does not select any options pass in name and symbol
             if(searchTerms.length()==0) {
                header = "Name,Symbol\n";
                 searchTerms = "ns";
