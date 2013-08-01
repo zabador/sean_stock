@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -43,26 +44,28 @@ public class MainView implements ActionListener {
         frame = new JFrame("Stock Info Selector");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,200);
-        frame.setLayout(new GridLayout(0,4));
-        JPanel checkboxPanel = new JPanel();
+        frame.setLayout(new BorderLayout(0,5));
+        JPanel checkboxPanel = new JPanel(new GridLayout(0,4));
         JPanel inputPanel = new JPanel();
 
         for(JCheckBox cb : checkboxes) {
-            frame.getContentPane().add(cb);
+            checkboxPanel.add(cb);
         }
 
-        JLabel askForInput = new JLabel("Enter a stock symbol");
+        JLabel askForInput = new JLabel("Enter a stock symbol:   ");
         inputPanel.add(askForInput);
 
-        symbol = new JTextField();
+        symbol = new JTextField(20);
 
         submit = new JButton("Submit");
         submit.addActionListener(this);
 
+        inputPanel.add(askForInput);
+        inputPanel.add(symbol);
+        inputPanel.add(submit);
 
-        frame.getContentPane().add(askForInput);
-        frame.getContentPane().add(symbol);
-        frame.getContentPane().add(submit);
+        frame.getContentPane().add(checkboxPanel,BorderLayout.NORTH);
+        frame.getContentPane().add(inputPanel,BorderLayout.SOUTH);
         
         frame.pack();
         frame.setVisible(true);
