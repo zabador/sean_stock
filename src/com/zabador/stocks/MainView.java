@@ -36,7 +36,7 @@ public class MainView implements ActionListener {
     private DefaultListModel listModel;
     private JScrollPane symbolPane;
     private JPanel buttonPanel, symbolPanel, searchPanel, search_symbolPanel;
-    private JLabel searchLabel;
+    private JLabel searchLabel, searchResult;
 
     public MainView() {
         fillMap();
@@ -60,7 +60,7 @@ public class MainView implements ActionListener {
         JPanel inputPanel = new JPanel();
         buttonPanel = new JPanel(new GridLayout(2,1));
         symbolPanel = new JPanel(new GridLayout(1,2));
-        searchPanel = new JPanel(new GridLayout(1,3));
+        searchPanel = new JPanel(new GridLayout(0,3));
         search_symbolPanel = new JPanel(new GridLayout(2,1));
         
 
@@ -81,7 +81,11 @@ public class MainView implements ActionListener {
         searchPanel.add(searchField);
 
         searchBtn = new JButton("Search");
+        searchBtn.addActionListener(this);
         searchPanel.add(searchBtn);
+
+        searchResult = new JLabel("");
+        searchPanel.add(searchResult);
 
         search_symbolPanel.add(symbolPanel);
         search_symbolPanel.add(searchPanel);
@@ -146,8 +150,6 @@ public class MainView implements ActionListener {
             System.out.println(searchSymbol);
             DownloadCSV download = new DownloadCSV(header, searchSymbol, searchTerms);
             download.download();
-            //SearchSymbol company = new SearchSymbol(symbol.getText());
-            //company.getSymbol();
             JOptionPane.showMessageDialog(frame, "File finished downloading");
         }
         // add symbol to the List
@@ -167,6 +169,12 @@ public class MainView implements ActionListener {
                 listModel.remove(symbols.getSelectedIndex());
                 symbols.setModel(listModel);
             }
+        }
+
+        else if(e.getSource() == searchBtn) {
+
+            SearchSymbol company = new SearchSymbol(searchField.getText());
+            searchResult.setText(company.getSymbol());
         }
     }
 

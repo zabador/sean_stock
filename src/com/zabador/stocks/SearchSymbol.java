@@ -26,13 +26,12 @@ public class SearchSymbol {
         this.query = query;
     }
 
-    public void getSymbol() {
+    public String getSymbol() {
         jsonFeed = readJsonFromUrl("http://d.yimg.com/autoc.finance.yahoo.com/autoc?query="+ query +"&callback=YAHOO.Finance.SymbolSuggest.ssCallback");
         JSONObject resultSet = jsonFeed.getJSONObject("ResultSet");
         JSONArray result = resultSet.getJSONArray("Result");
         JSONObject company = result.getJSONObject(0);
-        System.out.println(company.getString("symbol"));
-        System.out.println(company.getString("name"));
+        return company.getString("symbol")+"  -   "+company.getString("name");
     }
 
     private String readAll(Reader rd) {
