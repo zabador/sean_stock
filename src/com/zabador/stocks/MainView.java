@@ -35,6 +35,7 @@ public class MainView implements ActionListener {
     private JList symbols;
     private DefaultListModel listModel;
     private JScrollPane symbolPane;
+    private JPanel buttonPanel;
 
     public MainView() {
         fillMap();
@@ -56,6 +57,7 @@ public class MainView implements ActionListener {
         frame.setLayout(new BorderLayout(0,5));
         JPanel checkboxPanel = new JPanel(new GridLayout(0,4));
         JPanel inputPanel = new JPanel();
+        buttonPanel = new JPanel(new GridLayout(2,1));
 
         for(JCheckBox cb : checkboxes) {
             checkboxPanel.add(cb);
@@ -84,11 +86,13 @@ public class MainView implements ActionListener {
 
         remove = new JButton("<-- Remove");
         remove.addActionListener(this);
+        
+        buttonPanel.add(add);
+        buttonPanel.add(remove);
 
         inputPanel.add(askForInput);
         inputPanel.add(symbol);
-        inputPanel.add(add);
-        inputPanel.add(remove);
+        inputPanel.add(buttonPanel);
         inputPanel.add(symbolPane);
         inputPanel.add(submit);
 
@@ -112,6 +116,12 @@ public class MainView implements ActionListener {
                     header += key+","; // add comma for csv 
                     searchTerms += map.get(key);
                 }
+            }
+
+            // if user does not select any options pass in name and symbol as default
+            if(searchTerms.length()==0) {
+               header = "Name,Symbol\n";
+                searchTerms = "ns";
             }
 
             header = header.replaceAll(",$","\n");// remove last comma from header
