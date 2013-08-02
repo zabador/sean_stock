@@ -223,6 +223,7 @@ public class MainView implements ActionListener {
         add.addActionListener(this);
         remove.addActionListener(this);
         searchBtn.addActionListener(this);
+        addSearchBtn.addActionListener(this);
 
         frame.pack();
         frame.setVisible(true);
@@ -279,6 +280,20 @@ public class MainView implements ActionListener {
 
             SearchSymbol company = new SearchSymbol(searchModel, searchTxt.getText().replaceAll(" ","+"));
             searchList.setModel(company.getModel());
+        }
+        // add symbol to the List
+        else if(e.getSource() == addSearchBtn) {
+
+            if(!searchList.isSelectionEmpty() && searchList.getSelectedIndex() != 0) {
+                int selectedIndex = searchList.getSelectedIndex(); // get the comapany that is selected
+                String companySymbol = searchModel.get(selectedIndex).toString();
+                int index = companySymbol.indexOf(" "); // get the index of the space to strip out rest after symbol 
+                if(index != -1) {
+                    companySymbol = companySymbol.substring(0,index);
+                    listModel.addElement(companySymbol);
+                    symbols.setModel(listModel);
+                }
+            }
         }
     }
 
