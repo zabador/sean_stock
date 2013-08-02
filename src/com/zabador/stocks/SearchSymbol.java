@@ -10,6 +10,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import javax.swing.DefaultListModel;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -20,21 +22,35 @@ public class SearchSymbol {
     private JSONObject jsonFeed;
     private String symbol;
     private String query;
+    private DefaultListModel searchModel;
 
-    public SearchSymbol(String query) {
+    public SearchSymbol(DefaultListModel searchModel, String query) {
 
         this.query = query;
+        this.searchModel = searchModel;
     }
 
-    public String getSymbol() {
+    public DefaultListModel getModel() {
         jsonFeed = readJsonFromUrl("http://d.yimg.com/autoc.finance.yahoo.com/autoc?query="+ query +"&callback=YAHOO.Finance.SymbolSuggest.ssCallback");
         JSONObject resultSet = jsonFeed.getJSONObject("ResultSet");
         JSONArray result = resultSet.getJSONArray("Result");
+        String resultString = "<html><br>";
+        int length = (result.length() > 5) ? 5 : result.length() - 1;
+        System.out.println(length);
+        searchModel.clear();
+        searchModel.addElement("\n");
         try{
-            JSONObject company = result.getJSONObject(0);
-            return company.getString("symbol")+"  -   "+company.getString("name");
+            for(int i = 0; i < length; i++) {
+                JSONObject company = result.getJSONObject(i);
+                String symbol = company.getString("symbol");
+                String name = company.getString("name");
+                System.out.println(symbol+" "+name);
+                searchModel.addElement(symbol+"  -  "+name);
+            }
+            return searchModel;
         }catch(Exception e){
-            return "No results found";
+            searchModel.addElement("No Results Found!");
+            return searchModel;
         }
 
     }

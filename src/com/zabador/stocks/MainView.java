@@ -2,21 +2,9 @@ package com.zabador.stocks;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
+import java.awt.*;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,15 +16,16 @@ public class MainView implements ActionListener {
     private Map<String, String> map;
     private ArrayList<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
     private JButton submit;
-    private JButton add;
+    private JButton add, addSearchBtn;
     private JButton remove, searchBtn;
     private JFrame frame;
-    private JTextField symbol, searchField;
-    private JList symbols;
-    private DefaultListModel listModel;
-    private JScrollPane symbolPane;
-    private JPanel buttonPanel, symbolPanel, searchPanel, search_symbolPanel;
-    private JLabel searchLabel, searchResult;
+    private JTextField symbolTxt, searchTxt;
+    private JList symbols, searchList;
+    private DefaultListModel listModel, searchModel;
+    private JPanel userInputPanel, buttonPanel, symbolPanel, searchPanel, search_symbolPanel, checkboxPanel;
+    private JLabel searchLbl, searchResult, orLbl;
+    private JLabel enterSymbolLbl;
+    private JScrollPane jScrollPanel, symbolPane, jScrollList;
 
     public MainView() {
         fillMap();
@@ -56,70 +45,170 @@ public class MainView implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,200);
         frame.setLayout(new BorderLayout(0,5));
-        JPanel checkboxPanel = new JPanel(new GridLayout(0,4));
-        JPanel inputPanel = new JPanel();
-        buttonPanel = new JPanel(new GridLayout(2,1));
-        symbolPanel = new JPanel(new GridLayout(1,2));
-        searchPanel = new JPanel(new GridLayout(0,3));
-        search_symbolPanel = new JPanel(new GridLayout(2,1));
-        
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        listModel = new DefaultListModel();
+        searchModel = new DefaultListModel();
+        userInputPanel = new javax.swing.JPanel();
+        enterSymbolLbl = new javax.swing.JLabel();
+        orLbl = new javax.swing.JLabel();
+        searchLbl = new javax.swing.JLabel();
+        symbolTxt = new javax.swing.JTextField();
+        searchTxt = new javax.swing.JTextField();
+        add = new javax.swing.JButton();
+        searchBtn = new javax.swing.JButton();
+        jScrollList = new javax.swing.JScrollPane();
+        searchList = new javax.swing.JList();
+        jScrollPanel = new javax.swing.JScrollPane();
+        checkboxPanel = new javax.swing.JPanel();
+        symbolPane = new javax.swing.JScrollPane();
+        symbols = new javax.swing.JList();
+        remove = new javax.swing.JButton();
+        submit = new javax.swing.JButton();
+        addSearchBtn = new JButton();
 
+        frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        userInputPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        enterSymbolLbl.setText("Enter Company's Symbol:");
+
+        orLbl.setText("Or");
+
+        searchLbl.setText("Search for Company's Symbols:");
+
+        add.setText("Add -->");
+
+        searchBtn.setText("Search");
+
+        searchList.setBackground(new java.awt.Color(238, 238, 238));
+        searchList.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Search Results"));
+        searchList.setModel(searchModel);
+
+        jScrollList.setViewportView(searchList);
+
+        javax.swing.GroupLayout userInputPanelLayout = new javax.swing.GroupLayout(userInputPanel);
+        userInputPanel.setLayout(userInputPanelLayout);
+        userInputPanelLayout.setHorizontalGroup(
+                userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(userInputPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userInputPanelLayout.createSequentialGroup()
+                            .addComponent(orLbl)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(userInputPanelLayout.createSequentialGroup()
+                            .addComponent(enterSymbolLbl)
+                            .addGap(63, 63, 63)
+                            .addComponent(symbolTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                            .addComponent(add)
+                            .addGap(25, 25, 25))
+                        .addGroup(userInputPanelLayout.createSequentialGroup()
+                            .addComponent(searchLbl)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollList, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                                .addComponent(searchTxt))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(searchBtn)
+                            .addGap(27, 27, 27))))
+                            );
+        userInputPanelLayout.setVerticalGroup(
+                userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(userInputPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(enterSymbolLbl)
+                        .addComponent(symbolTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(add))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(orLbl)
+                    .addGap(18, 18, 18)
+                    .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(searchLbl)
+                        .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchBtn))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollList, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                    .addContainerGap())
+                );
+
+        jScrollPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Select Your Options"));
+
+        javax.swing.GroupLayout checkboxPanelLayout = new javax.swing.GroupLayout(checkboxPanel);
+        checkboxPanel.setLayout(checkboxPanelLayout);
+        checkboxPanelLayout.setHorizontalGroup(
+                checkboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 623, Short.MAX_VALUE)
+                );
+        checkboxPanelLayout.setVerticalGroup(
+                checkboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 343, Short.MAX_VALUE)
+                );
+
+        checkboxPanel.setLayout(new GridLayout(0,2));
+        /*
+         *
+         * add the checkboxes
+         *
+         */
         for(JCheckBox cb : checkboxes) {
             checkboxPanel.add(cb);
         }
 
-        JLabel askForInput = new JLabel("Enter a stock symbol:   ");
-        symbolPanel.add(askForInput);
+        jScrollPanel.setViewportView(checkboxPanel);
 
-        symbol = new JTextField(20);
-        symbolPanel.add(symbol);
+        symbols.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Symbols"));
+        symbols.setModel(listModel);
+        symbolPane.setViewportView(symbols);
 
-        searchLabel = new JLabel("Or.... Search for a company's symbol");
-        searchPanel.add(searchLabel);
+        remove.setText("<-- Remove");
 
-        searchField = new JTextField(20);
-        searchPanel.add(searchField);
+        submit.setText("Submit");
 
-        searchBtn = new JButton("Search");
-        searchBtn.addActionListener(this);
-        searchPanel.add(searchBtn);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(frame.getContentPane());
+        frame.getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(userInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(9, 9, 9)
+                    .addComponent(remove)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(symbolPane, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                    .addComponent(submit)
+                    .addContainerGap())
+                );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(userInputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(submit)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(remove)
+                                    .addGap(187, 187, 187))
+                                .addComponent(symbolPane, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap())
+                );
 
-        searchResult = new JLabel("");
-        searchPanel.add(searchResult);
 
-        search_symbolPanel.add(symbolPanel);
-        search_symbolPanel.add(searchPanel);
-
-        listModel = new DefaultListModel();
-
-        symbols = new JList(listModel);
-        symbols.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        symbols.setLayoutOrientation(JList.VERTICAL);
-        symbols.setVisibleRowCount(20);
-        symbols.setFixedCellWidth(150);
-
-        symbolPane = new JScrollPane(symbols);
-
-        submit = new JButton("Submit");
         submit.addActionListener(this);
-
-        add = new JButton("Add -->");
         add.addActionListener(this);
-
-        remove = new JButton("<-- Remove");
         remove.addActionListener(this);
-        
-        buttonPanel.add(add);
-        buttonPanel.add(remove);
+        searchBtn.addActionListener(this);
 
-        inputPanel.add(search_symbolPanel);
-        inputPanel.add(buttonPanel);
-        inputPanel.add(symbolPane);
-        inputPanel.add(submit);
-
-        frame.getContentPane().add(checkboxPanel,BorderLayout.NORTH);
-        frame.getContentPane().add(inputPanel,BorderLayout.SOUTH);
-        
         frame.pack();
         frame.setVisible(true);
     }
@@ -141,7 +230,7 @@ public class MainView implements ActionListener {
 
             // if user does not select any options pass in name and symbol
             if(searchTerms.length()==0) {
-               header = "Name,Symbol\n";
+                header = "Name,Symbol\n";
                 searchTerms = "ns";
             }
 
@@ -155,10 +244,10 @@ public class MainView implements ActionListener {
         // add symbol to the List
         else if(e.getSource() == add) {
 
-            if(!symbol.getText().isEmpty()) {
-                listModel.addElement(symbol.getText());
+            if(!symbolTxt.getText().isEmpty()) {
+                listModel.addElement(symbolTxt.getText());
                 symbols.setModel(listModel);
-                symbol.setText("");
+                symbolTxt.setText("");
             }
         }
 
@@ -173,8 +262,8 @@ public class MainView implements ActionListener {
 
         else if(e.getSource() == searchBtn) {
 
-            SearchSymbol company = new SearchSymbol(searchField.getText().replaceAll(" ","+"));
-            searchResult.setText(company.getSymbol());
+            SearchSymbol company = new SearchSymbol(searchModel, searchTxt.getText().replaceAll(" ","+"));
+            searchList.setModel(company.getModel());
         }
     }
 
