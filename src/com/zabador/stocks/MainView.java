@@ -86,6 +86,8 @@ public class MainView implements ActionListener {
 
         jScrollList.setViewportView(searchList);
 
+        addSearchBtn.setText("Add -->");
+
         javax.swing.GroupLayout userInputPanelLayout = new javax.swing.GroupLayout(userInputPanel);
         userInputPanel.setLayout(userInputPanelLayout);
         userInputPanelLayout.setHorizontalGroup(
@@ -94,24 +96,30 @@ public class MainView implements ActionListener {
                     .addContainerGap()
                     .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(userInputPanelLayout.createSequentialGroup()
-                            .addComponent(orLbl)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(userInputPanelLayout.createSequentialGroup()
+                                    .addComponent(searchLbl)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jScrollList, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                                        .addComponent(searchTxt))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(searchBtn)
+                                        .addComponent(addSearchBtn)))
+                                .addGroup(userInputPanelLayout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(add)
+                                    .addGap(2, 2, 2)))
+                            .addGap(16, 16, 16))
                         .addGroup(userInputPanelLayout.createSequentialGroup()
-                            .addComponent(enterSymbolLbl)
-                            .addGap(63, 63, 63)
-                            .addComponent(symbolTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                            .addComponent(add)
-                            .addGap(25, 25, 25))
-                        .addGroup(userInputPanelLayout.createSequentialGroup()
-                            .addComponent(searchLbl)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollList, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                                .addComponent(searchTxt))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(searchBtn)
-                            .addGap(27, 27, 27))))
+                            .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(orLbl)
+                                .addGroup(userInputPanelLayout.createSequentialGroup()
+                                    .addComponent(enterSymbolLbl)
+                                    .addGap(63, 63, 63)
+                                    .addComponent(symbolTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                             );
         userInputPanelLayout.setVerticalGroup(
                 userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,10 +136,17 @@ public class MainView implements ActionListener {
                         .addComponent(searchLbl)
                         .addComponent(searchTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(searchBtn))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollList, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                    .addContainerGap())
-                );
+                    .addGroup(userInputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userInputPanelLayout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jScrollList, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addContainerGap())
+                        .addGroup(userInputPanelLayout.createSequentialGroup()
+                            .addGap(81, 81, 81)
+                            .addComponent(addSearchBtn)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            );
+
 
         jScrollPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED), "Select Your Options"));
 

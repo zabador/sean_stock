@@ -35,8 +35,7 @@ public class SearchSymbol {
         JSONObject resultSet = jsonFeed.getJSONObject("ResultSet");
         JSONArray result = resultSet.getJSONArray("Result");
         String resultString = "<html><br>";
-        int length = (result.length() > 5) ? 5 : result.length() - 1;
-        System.out.println(length);
+        int length = result.length() - 1;
         searchModel.clear();
         searchModel.addElement("\n");
         try{
@@ -44,7 +43,6 @@ public class SearchSymbol {
                 JSONObject company = result.getJSONObject(i);
                 String symbol = company.getString("symbol");
                 String name = company.getString("name");
-                System.out.println(symbol+" "+name);
                 searchModel.addElement(symbol+"  -  "+name);
             }
             return searchModel;
