@@ -66,6 +66,8 @@ public class MainView implements ActionListener {
         submit = new javax.swing.JButton();
         addSearchBtn = new JButton();
 
+        jScrollPanel.getVerticalScrollBar().setUnitIncrement(16);
+
         frame.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         userInputPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
